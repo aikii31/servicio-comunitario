@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embotelladora de Agua - Sistema Unificado</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <aside class="sidebar" id="app-sidebar">
+            <div class="sidebar-brand">
+                <svg width="120" height="120" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="sunGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#f59e0b" />
+                            <stop offset="100%" stop-color="#ea580c" />
+                        </linearGradient>
+                        <linearGradient id="bubbleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9" />
+                            <stop offset="100%" stop-color="#0284c7" stop-opacity="1" />
+                        </linearGradient>
+                        <linearGradient id="waveGradDark" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#1d4ed8" />
+                            <stop offset="100%" stop-color="#1e3a8a" />
+                        </linearGradient>
+                        <linearGradient id="waveGradLight" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#0ea5e9" />
+                            <stop offset="100%" stop-color="#0284c7" />
+                        </linearGradient>
+                    </defs>
+                    
+                    <g id="rays">
+                        <polygon points="100,8 92,26 108,26" fill="url(#sunGrad)" />
+                        <polygon points="132,15 118,31 131,41" fill="url(#sunGrad)" />
+                        <polygon points="159,32 141,45 152,56" fill="url(#sunGrad)" />
+                        <polygon points="178,57 157,64 165,77" fill="url(#sunGrad)" />
+                        <polygon points="187,88 165,88 169,101" fill="url(#sunGrad)" />
+                        
+                        <polygon points="68,15 82,31 69,41" fill="url(#sunGrad)" />
+                        <polygon points="41,32 59,45 48,56" fill="url(#sunGrad)" />
+                        <polygon points="22,57 43,64 35,77" fill="url(#sunGrad)" />
+                        <polygon points="13,88 35,88 31,101" fill="url(#sunGrad)" />
+                    </g>
+                    
+                    <circle cx="100" cy="105" r="72" fill="white" stroke="#0284c7" stroke-width="4.5" />
+                    
+                    <path d="M72,95 A 28,28 0 0,1 128,95 Z" fill="url(#sunGrad)" />
+                    
+                    <g id="droplets">
+                        <circle cx="100" cy="51" r="4.5" fill="url(#bubbleGrad)" />
+                        <circle cx="91" cy="54" r="3.5" fill="url(#bubbleGrad)" />
+                        <circle cx="109" cy="54" r="3.5" fill="url(#bubbleGrad)" />
+                        <circle cx="82" cy="61" r="4.5" fill="url(#bubbleGrad)" />
+                        <circle cx="118" cy="61" r="4.5" fill="url(#bubbleGrad)" />
+                        <circle cx="73" cy="70" r="5" fill="url(#bubbleGrad)" />
+                        <circle cx="127" cy="70" r="5" fill="url(#bubbleGrad)" />
+                        <circle cx="64" cy="80" r="6" fill="url(#bubbleGrad)" />
+                        <circle cx="136" cy="80" r="6" fill="url(#bubbleGrad)" />
+                        
+                        <circle cx="100" cy="64" r="4.5" fill="url(#bubbleGrad)" />
+                        <circle cx="89" cy="67" r="4" fill="url(#bubbleGrad)" />
+                        <circle cx="111" cy="67" r="4" fill="url(#bubbleGrad)" />
+                        <circle cx="78" cy="76" r="5" fill="url(#bubbleGrad)" />
+                        <circle cx="122" cy="76" r="5" fill="url(#bubbleGrad)" />
+                        <circle cx="100" cy="78" r="5.5" fill="url(#bubbleGrad)" />
+                    </g>
+                    
+                    <path d="M29,114 Q60,105 100,114 T171,114 L171,170 A72,72 0 0,1 29,170 Z" fill="url(#waveGradDark)" />
+                    <path d="M29,123 Q60,116 100,125 T171,123 L171,170 A72,72 0 0,1 29,170 Z" fill="url(#waveGradLight)" opacity="0.85" />
+                    
+                    <path d="M28,98 Q100,87 172,98" stroke="white" stroke-width="5" fill="none" />
+                    <path d="M28,98 Q100,87 172,98" stroke="#1d4ed8" stroke-width="1.5" fill="none" />
+                    
+                    <text x="100" y="110" font-family="'Segoe UI', Arial, sans-serif" font-weight="900" font-size="20" text-anchor="middle">
+                        <tspan fill="#1e3a8a">Agua</tspan><tspan fill="#0ea5e9">Sol</tspan>
+                    </text>
+                    <text x="100" y="125" font-family="'Segoe UI', Arial, sans-serif" font-weight="800" font-size="11" letter-spacing="1" fill="#1e3a8a" text-anchor="middle">REFRESCANTE</text>
+                    
+                    <text x="100" y="158" font-family="'Segoe UI', Arial, sans-serif" font-weight="700" font-size="8.5" fill="white" letter-spacing="1.2" text-anchor="middle">100% PURA</text>
+                </svg>
+            </div>
+            
+            <nav style="display: flex; flex-direction: column; gap: 8px; flex: 1;">
+                <button onclick="cambiarVista('inicio')" id="btn-inicio" class="menu-btn">📊 Panel General</button>
+                <button onclick="cambiarVista('pos')" id="btn-ventas" class="menu-btn">💰 Ventas (POS)</button>
+                <button onclick="cambiarVista('productos')" id="btn-productos" class="menu-btn">📦 Productos</button>
+                <button onclick="cambiarVista('historial')" id="btn-historial" class="menu-btn">📋 Historial</button>
+                <button onclick="cambiarVista('root')" id="menu-btn-root" class="menu-btn" style="display: none; background: #334155; color: #f8fafc;">🔑 Panel Usuarios (Root)</button>
+            </nav>
+
+            <div style="border-top: 1px solid #334155; padding-top: 15px;">
+                <button onclick="cerrarSesion()" class="menu-btn" style="color: #f87171;">🚪 Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <span id="modulo-titulo">Sistema de Gestión</span>
+                <div class="user-badge" id="app-user-badge">FA</div>
+            </header>
+
+            <div class="background-watermark" id="brand-watermark">
+                <svg width="340" height="340" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="sunGradWatermark" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#f59e0b" />
+                            <stop offset="100%" stop-color="#ea580c" />
+                        </linearGradient>
+                        <linearGradient id="bubbleGradWatermark" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#38bdf8" />
+                            <stop offset="100%" stop-color="#0284c7" />
+                        </linearGradient>
+                        <linearGradient id="waveGradDarkWatermark" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#1d4ed8" />
+                            <stop offset="100%" stop-color="#1e3a8a" />
+                        </linearGradient>
+                        <linearGradient id="waveGradLightWatermark" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#0ea5e9" />
+                            <stop offset="100%" stop-color="#0284c7" />
+                        </linearGradient>
+                    </defs>
+                    
+                    <g>
+                        <polygon points="100,8 92,26 108,26" fill="url(#sunGradWatermark)" />
+                        <polygon points="132,15 118,31 131,41" fill="url(#sunGradWatermark)" />
+                        <polygon points="159,32 141,45 152,56" fill="url(#sunGradWatermark)" />
+                        <polygon points="178,57 157,64 165,77" fill="url(#sunGradWatermark)" />
+                        <polygon points="187,88 165,88 169,101" fill="url(#sunGradWatermark)" />
+                        
+                        <polygon points="68,15 82,31 69,41" fill="url(#sunGradWatermark)" />
+                        <polygon points="41,32 59,45 48,56" fill="url(#sunGradWatermark)" />
+                        <polygon points="22,57 43,64 35,77" fill="url(#sunGradWatermark)" />
+                        <polygon points="13,88 35,88 31,101" fill="url(#sunGradWatermark)" />
+                    </g>
+                    
+                    <circle cx="100" cy="105" r="72" fill="white" stroke="#0284c7" stroke-width="4.5" />
+                    
+                    <path d="M72,95 A 28,28 0 0,1 128,95 Z" fill="url(#sunGradWatermark)" />
+                    
+                    <g>
+                        <circle cx="100" cy="51" r="4.5" fill="url(#bubbleGradWatermark)" />
+                        <circle cx="91" cy="54" r="3.5" fill="url(#bubbleGradWatermark)" />
+                        <circle cx="109" cy="54" r="3.5" fill="url(#bubbleGradWatermark)" />
+                        <circle cx="82" cy="61" r="4.5" fill="url(#bubbleGradWatermark)" />
+                        <circle cx="118" cy="61" r="4.5" fill="url(#bubbleGradWatermark)" />
+                        <circle cx="73" cy="70" r="5" fill="url(#bubbleGradWatermark)" />
+                        <circle cx="127" cy="70" r="5" fill="url(#bubbleGradWatermark)" />
+                        <circle cx="64" cy="80" r="6" fill="url(#bubbleGradWatermark)" />
+                        <circle cx="136" cy="80" r="6" fill="url(#bubbleGradWatermark)" />
+                        
+                        <circle cx="100" cy="64" r="4.5" fill="url(#bubbleGradWatermark)" />
+                        <circle cx="89" cy="67" r="4" fill="url(#bubbleGradWatermark)" />
+                        <circle cx="111" cy="67" r="4" fill="url(#bubbleGradWatermark)" />
+                        <circle cx="78" cy="76" r="5" fill="url(#bubbleGradWatermark)" />
+                        <circle cx="122" cy="76" r="5" fill="url(#bubbleGradWatermark)" />
+                        <circle cx="100" cy="78" r="5.5" fill="url(#bubbleGradWatermark)" />
+                    </g>
+                    
+                    <path d="M29,114 Q60,105 100,114 T171,114 L171,170 A72,72 0 0,1 29,170 Z" fill="url(#waveGradDarkWatermark)" />
+                    <path d="M29,123 Q60,116 100,125 T171,123 L171,170 A72,72 0 0,1 29,170 Z" fill="url(#waveGradLightWatermark)" opacity="0.85" />
+                    
+                    <path d="M28,98 Q100,87 172,98" stroke="white" stroke-width="5" fill="none" />
+                    <path d="M28,98 Q100,87 172,98" stroke="#1d4ed8" stroke-width="1.5" fill="none" />
+                    
+                    <text x="100" y="110" font-family="'Segoe UI', Arial, sans-serif" font-weight="900" font-size="20" text-anchor="middle">
+                        <tspan fill="#1e3a8a">Agua</tspan><tspan fill="#0ea5e9">Sol</tspan>
+                    </text>
+                    <text x="100" y="125" font-family="'Segoe UI', Arial, sans-serif" font-weight="800" font-size="11" letter-spacing="1" fill="#1e3a8a" text-anchor="middle">REFRESCANTE</text>
+                    
+                    <text x="100" y="158" font-family="'Segoe UI', Arial, sans-serif" font-weight="700" font-size="8.5" fill="white" letter-spacing="1.2" text-anchor="middle">100% PURA</text>
+                </svg>
+                <p style="font-size: 0.95rem; font-weight: 600; letter-spacing: 1.5px; color: #475569; margin-top: 15px; text-transform: uppercase;">SELECCIONE UN MÓDULO PARA EMPEZAR</p>
+            </div>
+
+            <div id="dinamic-view" class="view-container"></div>
+
+            <footer class="footer-actions" id="app-footer-actions">
+                <button id="btn-add" class="action-btn add-btn">+ Añadir</button>
+                <button id="btn-edit" class="action-btn edit-btn">✏️ Modificar</button>
+                <button id="btn-delete" class="action-btn delete-btn">❌ Eliminar</button>
+            </footer>
+        </main>
+    </div>
+
+    <div id="app-modal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">Formulario</h3>
+                <button class="modal-close" onclick="cerrarModal()">&times;</button>
+            </div>
+            <div id="modal-body">
+                </div>
+            <div class="modal-footer">
+                <button class="action-btn edit-btn" onclick="cerrarModal()">Cancelar</button>
+                <button class="action-btn add-btn" id="modal-submit-btn">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toast-wrapper"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
